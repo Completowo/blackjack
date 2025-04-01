@@ -1,0 +1,140 @@
+/* Cosas chicas */
+
+.margin0{
+    margin: 0px
+}
+
+
+
+
+
+
+
+
+
+body{
+    margin: 0px;
+    height: 100vh;
+    width: 100vw;
+    position:relative;
+    background-color: green;
+}
+
+
+
+/* Interfaz del Dealer */
+
+#mazoDealer{
+    height: 165px;
+    width: 100%;
+    background-color: rgba(236, 236, 236, 0.13);
+
+    position:absolute;
+    top: 50px;
+}
+
+#cartasDealer{
+    display:block;
+    width: fit-content;
+    height: 100%;
+    margin: auto auto auto auto;
+}
+
+#contadorDealer{
+    display: block;
+    position: absolute;
+    height: fit-content;
+    width: 200px;
+    text-align: center;
+    color: #fff;
+
+    top: 230px;
+    left: 30%;
+}
+
+
+
+
+
+
+/* Interfaz del jugador */
+
+#contador{
+    display: block;
+    position: absolute;
+    height: fit-content;
+    width: 200px;
+    text-align: center;
+    color: #fff;
+
+    bottom: 230px;
+    right: 30%
+}
+
+
+
+#miMazo{
+    height: 165px;
+    width: 100%;
+    background-color: rgba(236, 236, 236, 0.13);
+
+    position:absolute;
+    bottom: 50px;
+}
+#misCartas{
+    display:block;
+    width: fit-content;
+    height: 100%;
+    margin: auto auto auto auto;
+}
+
+.carta{
+    height: 150px;
+    width: 107px;
+    background-size:contain;
+    background-repeat: no-repeat;
+    float: inline-start;
+    margin-top: 15px;
+    transition-duration: 0.2s;
+    border-radius: 10px;
+}
+
+.cartaDealer{
+    height: 150px;
+    width: 107px;
+    background-size:contain;
+    background-repeat: no-repeat;
+    float: inline-start;
+    transition-duration: 0.2s;
+    border-radius: 10px;
+}
+
+.carta:hover{
+    margin-top: 0px;
+}
+
+#btnAgregarCarta{
+    position: absolute;
+    height: 60px;
+    width: 180px;
+    background-image:linear-gradient(135deg, #006eff, #004db3);
+    border-radius: 10px;
+    border: none;
+    color: #fff;
+
+    bottom: 230px;
+    left: 30%
+}
+
+#btnQuedarse{
+    position: absolute;
+    height: 60px;
+    width: 180px;
+    background-image:linear-gradient(135deg, #006eff, #004db3);
+    border-radius: 10px;
+    border: none;
+    color: #fff;
+
+    bottom: 290px;
+    left: 30%;
+}

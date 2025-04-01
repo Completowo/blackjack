@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Interfaz Dealer -->
+    <div id="mazoDealer"> 
+        <div id="cartasDealer">
+            <!-- Cartas del Dealer-->
+
+        </div>
+    </div>
+
+    <div id="contadorDealer">
+        <h1 class="margin0">TOTAL</h1>
+        <h4 id="h3ValorDealer"class="margin0">Valor</h4>
+    </div>
+
+
+
+
+
+
+    <!-- Interfaz usuario -->
+
+    
+    <div>
+        <button id="btnAgregarCarta" onclick="AgregarCarta()"> AGREGAR CARTA </button>
+    </div>
+    <div>
+        <button id="btnQuedarse" onclick="finalizarPartida()"> QUEDARSE </button>
+    </div>
+
+    <!-- Visualizar cuenta de las cartas -->
+    
+
+    <div id="contador">
+        <h1 class="margin0">TOTAL</h1>
+        <h4 id="h3Valor"class="margin0">Valor</h4>
+    </div>
+
+    <div id="miMazo">
+        <!-- Contenedor de las cartas del mazo del jugador -->
+        <div id="misCartas">
+            <!-- Cartas del jugador -->
+
+        </div>
+    </div>
+
+
+    <script src="logic.js"></script>
+</body>
+</html>
