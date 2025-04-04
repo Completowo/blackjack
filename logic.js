@@ -29,6 +29,8 @@ for (let n = 0; n < mazoDealer.length; n++) {
     
 }
 
+FinalizarPartida()
+
 
 
 
@@ -52,15 +54,15 @@ function voltearCartasDealer(){
 
 }
 
-function btnFinalizarPartida(){
-    voltearCartasDealer();
+function FinalizarPartida(){
+    desactivarActivarBtn(0)
+    desactivarActivarBtn(1)
+
     AgregarCartaDealer();
+    voltearCartasDealer();
+
     h3MostrarValor(sumarCartas(mazoDealer, true),false);
-    identificarGanador(mazo, mazoDealer);
-
-
-
-
+    
     switch (identificarGanador(mazo, mazoDealer)){
         
         case 2:
@@ -78,8 +80,6 @@ function btnFinalizarPartida(){
 function AgregarCarta(){
     darCartas(1,mazo,cartas)
     crearCarta(mazo[mazo.length-1])
-    if (sumarCartas(mazo, true) > 21)
-        document.getElementById("mensajeFinal").innerHTML = "PERDISTE"
 }
 
 function AgregarCartaDealer(){
@@ -196,12 +196,40 @@ function sumarCartas(mazo, flag) {
     
 
     if(suma >= 21){
-        document.getElementById("btnAgregarCarta").disabled = true;
-        document.getElementById("btnAgregarCarta").style.backgroundImage = "linear-gradient(135deg, #00449c, #002e69)"
-        document.getElementById("btnAgregarCarta").style.opacity = "50%"
+        console.log("gil")
     }
 
     return suma
+}
+
+function desactivarActivarBtn(numBtn){
+    let flag = false
+    let idBoton
+    let color = "linear-gradient(135deg, #006eff, #004db3);"
+    let opacidad = "100%"
+
+    switch (numBtn) {
+        case 0:
+            idBoton = "btnAgregarCarta";
+            break
+        case 1: 
+            idBoton = "btnQuedarse";
+            break
+        case 2: 
+            idBoton = "btnReiniciar";
+            break
+    }
+    
+    /* En caso de que el botón ya esté activado: */
+    if (document.getElementById(idBoton).disabled == false){
+        flag = true;
+        color = "linear-gradient(135deg, #00449c, #002e69)";
+        opacidad = "50%"
+    }
+
+    document.getElementById(idBoton).disabled = flag;
+    document.getElementById(idBoton).style.backgroundImage = color;
+    document.getElementById(idBoton).style.opacity = opacidad;
 }
 
 function identificarGanador(mazoJ, mazoD){
