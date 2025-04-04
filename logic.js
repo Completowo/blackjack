@@ -53,9 +53,12 @@ function voltearCartasDealer(){
 }
 
 function btnFinalizarPartida(){
-    voltearCartasDealer()
-    h3MostrarValor(sumarCartas(mazoDealer, true),false)
-    identificarGanador(mazo, mazoDealer)
+    voltearCartasDealer();
+    AgregarCartaDealer();
+    h3MostrarValor(sumarCartas(mazoDealer, true),false);
+    identificarGanador(mazo, mazoDealer);
+
+
 
 
     switch (identificarGanador(mazo, mazoDealer)){
@@ -75,6 +78,15 @@ function btnFinalizarPartida(){
 function AgregarCarta(){
     darCartas(1,mazo,cartas)
     crearCarta(mazo[mazo.length-1])
+    if (sumarCartas(mazo, true) > 21)
+        document.getElementById("mensajeFinal").innerHTML = "PERDISTE"
+}
+
+function AgregarCartaDealer(){
+    while (sumarCartas(mazoDealer, true) < 17){
+        darCartas(1, mazoDealer,cartas)
+        crearCartaDealer(mazo[mazo.length-1])
+    }
 }
 
 function generarCartas(cartas){
@@ -115,16 +127,6 @@ function mostrarMazo(mazo) {
 
 function limpiarMazo(mazo) {
     mazo.length = 0;
-}
-
-function poblarMazoDealer(cartas, mazoDealer) {
-    if (mazoDealer.length == 0) {
-        darCartas(1, mazoDealer, cartas)
-    }
-
-    while (sumarCartas(mazoDealer, true) < 17){
-        darCartas(1, mazoDealer, cartas)
-    }
 }
 
 function crearCarta(carta){
