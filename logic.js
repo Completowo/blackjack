@@ -76,18 +76,21 @@ function FinalizarPartida(){
 
     h3MostrarValor(sumarCartas(mazoDealer, true),false);
     
-    switch (identificarGanador(mazo, mazoDealer)){
+    let resultados = identificarGanador(mazo, mazoDealer)
+    switch (resultados[0]){
         
         case 2:
-            document.getElementById("mensajeFinal").innerHTML = "EMPATE"
+            document.getElementById("mensajeFinal").innerHTML = "EMPATE";
              break
         case 1:
-            document.getElementById("mensajeFinal").innerHTML = "GANASTE"
+            document.getElementById("mensajeFinal").innerHTML = "GANASTE";
              break
         case 0:
-            document.getElementById("mensajeFinal").innerHTML = "PERDISTE"
+            document.getElementById("mensajeFinal").innerHTML = "PERDISTE";
              break
     }
+
+    document.getElementById("subMensajeFinal").innerHTML = resultados[1];
 
 }
 
@@ -280,26 +283,45 @@ function identificarGanador(mazoJ, mazoD){
     lol = true
     let totalD = sumarCartas(mazoD, true);
 
-    if (totalJ <= 21 && totalD < 21){
+    let resultado = 0;
+    let sub = "";
+
+    if (totalJ < 22 && totalD < 22){
         if (totalJ == totalD){
             /* Empate */
-            return 2
+            resultado = 2
+            sub = ""
         }
         else if (totalJ > totalD){
             /* Ganaste por puntaje */
-            return 1
+            resultado = 1
+            sub = "Le ganaste en puntaje al Dealer"
         }
         else{
             /* Perdiste por puntaje*/
-            return 0
+            resultado = 0
+            sub = "Perdiste por puntaje contra Dealer"
         }
     } else if (totalJ <= 21 && totalD > 21){
         /* Ganaste, el Dealer se excedió */
-        return 1
+        resultado = 1
+        sub = "El dealer se excedió"
     } else {
         /* Perdiste malo wajaja*/
-        return 0
+        resultado = 0
+
+        switch (Math.floor(Math.random() * 25)){
+            case 0: sub = "MALO QLO WAJAJAJAJAJA"; break
+            case 1: sub = "Por codicioso (WAJAJA)"; break
+            case 2: sub = "WAJAJAJAJA"; break
+            case 3: sub = "Por codicioso"; break
+            case 4: sub = "Buuuu"; break
+            default: sub = "Te excediste"; break
+        }
+        
     }
+
+    return [resultado, sub]
 }
 
 /*  Mostrar valor del mazo en pantalla

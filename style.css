@@ -27,6 +27,16 @@ body{
     text-align: center;
     color: #fff;
 
+    bottom: 51%;
+}
+
+#subMensajeFinal{
+    position: absolute;
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+    color: #ffffff83;
+
     bottom: 48%;
 }
 
