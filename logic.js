@@ -1,35 +1,34 @@
-/* Declaración de variables */
+// Declaración de variables
 
 let cartas = [];
 let mazo = [];
 let mazoDealer = [];
 let flag = true;
 
+// Toda la Lógica va aquí 
+
+// Primero se genera la baraja completa de las cartas
 generarCartas(cartas)
 
-/*Logica*/
-
-
-/* Empezar con 2 cartas */
+// Se le dan 2 cartas al Jugador y al Dealer 
 darCartas(2, mazo, cartas)
 darCartas(2, mazoDealer, cartas)
 
 
-/* dibujar las cartas */
+// Dibujar en la pantalla las cartas del jugador
 for (let n = 0; n < mazo.length; n++) {
     crearCarta(mazo[n])
 }
 
+//Dibujar en la pantalla las cartas del Dealer
 for (let n = 0; n < mazoDealer.length; n++) {
     if (n == 0){
         crearCartaDealer(mazoDealer[n], true)
     } else {
         crearCartaDealer(mazoDealer[n], false)
     }
-    
 }
 
-FinalizarPartida()
 
 
 
@@ -38,8 +37,17 @@ FinalizarPartida()
 
 
 
-/* Funciones */
 
+
+
+
+
+
+
+//      ***Funciones*** 
+
+
+// Dar vuelta las cartas que están boca abajo del Dealer.
 function voltearCartasDealer(){
     for (let n = 0; n < mazoDealer.length; n++){
         let img = document.getElementById(mostrarCarta(mazoDealer[n])+"-D").style.backgroundImage
@@ -47,13 +55,11 @@ function voltearCartasDealer(){
         if (img == 'url("Cartas/back.jpg")'){
             let query = 'url(Cartas/' + mostrarCarta(mazoDealer[n]) + '.png)'
             document.getElementById(mostrarCarta(mazoDealer[n])+"-D").style.backgroundImage = query
-        }
-
-        
+        }   
     }
-
 }
 
+// Terminar el juego y mostrar el resultado
 function FinalizarPartida(){
     desactivarActivarBtn(0)
     desactivarActivarBtn(1)
@@ -77,11 +83,36 @@ function FinalizarPartida(){
     }
 }
 
+
+//      ***Funciones de las cartas***
+
+//Genera todas las cartas de la baraja.
+function generarCartas(cartas){
+    for (let n = 0; n < 4; n++) {
+        for (let m = 0; m < 13; m++) {
+            cartas.push([n,m])
+        }
+    }
+}
+
+// Revisa si la carta existe dentro del mazo
+function buscarCarta(carta, mazo){
+    for (let n = 0; n != mazo.lenght; n++)
+        if (carta == mazo[n]){
+            return true;
+        } else {
+            return false;
+        }
+}
+
+// Le agrega 1 carta al mazo del Jugador
 function AgregarCarta(){
     darCartas(1,mazo,cartas)
     crearCarta(mazo[mazo.length-1])
 }
 
+
+// Agregar cartas al Dealer hasta que el valor total de su mazo sea mayor a 16
 function AgregarCartaDealer(){
     while (sumarCartas(mazoDealer, true) < 17){
         darCartas(1, mazoDealer,cartas)
@@ -89,15 +120,7 @@ function AgregarCartaDealer(){
     }
 }
 
-function generarCartas(cartas){
-    for (let n = 0; n < 4; n++) {
-        for (let m = 0; m < 13; m++) {
-            cartas.push([n,m])
-        }
-
-    }
-}
-
+// Dar X cantidad de cartas a un mazo
 function darCartas(nCartas, mazo, cartas){
     let count=0;
     while (nCartas != count){
@@ -109,53 +132,47 @@ function darCartas(nCartas, mazo, cartas){
     }
 }
 
-function buscarCarta(carta, mazo){
-    for (let n = 0; n != mazo.lenght; n++)
-        if (carta == mazo[n]){
-            return true;
-        } else {
-            return false;
-        }
-
-}
-
+// Imprimir cartas en la consola
 function mostrarMazo(mazo) {
     for (let n = 0; n < mazo.length; n++) {
         console.log(mostrarCarta(mazo[n]))
     }
 }
 
+// Quita TODAS las cartas de un mazo
 function limpiarMazo(mazo) {
     mazo.length = 0;
 }
 
+// Dibuja 1 carta en la baraja del Jugador
 function crearCarta(carta){
-    /* Crear contenedor padre */
+    // Crear contenedor padre
     const divSuperior = document.createElement("div");
     divSuperior.id = mostrarCarta(carta)+"-J";
     divSuperior.className = "carta";
 
-    /* Insertar carta creada */
+    // Insertar carta creada
     document.getElementById("misCartas").insertAdjacentElement("afterbegin", divSuperior);
     
-    /* Buscar y colocar textura a la carta */
+    // Buscar y colocar textura a la carta
     let query = 'url(Cartas/' + mostrarCarta(carta) + '.png)'
     document.getElementById(mostrarCarta(carta)+"-J").style.backgroundImage = query
 
-     /* actualizar valor del contador h3Valor */
+     // actualizar valor del contador h3Valor
      h3MostrarValor(sumarCartas(mazo, true),true)
 }
 
+// Dibuja 1 carta en la baraja del Dealer (Si Flag = True, la primera carta será volteada boca abajo)
 function crearCartaDealer(carta, flag){
-    /* Crear contenedor padre */
+    // Crear contenedor padre
     const divSuperior = document.createElement("div");
     divSuperior.id = mostrarCarta(carta)+"-D";
     divSuperior.className = "cartaDealer";
 
-    /* Insertar carta creada */
+    // Insertar carta creada
     document.getElementById("cartasDealer").insertAdjacentElement("afterbegin", divSuperior);
     
-    /* Buscar y colocar textura a la carta */
+    // Buscar y colocar textura a la carta
 
     let query = ""
     if (flag){
@@ -165,17 +182,18 @@ function crearCartaDealer(carta, flag){
     }
     document.getElementById(mostrarCarta(carta)+"-D").style.backgroundImage = query
     
-    /* actualizar valor del contador h3Valor */
+    // Actualizar valor del contador h3Valor
     h3MostrarValor(sumarCartas(mazoDealer, false),false)
 }
 
+
 function sumarCartas(mazo, flag) {
     let valorCartas = {
-        0: 11, /*AS*/
+        0: 11, //AS
         1:2, 2:3, 3:4, 4:5, 5:6, 6:7, 7:8, 8:9, 9:10,
-        10: 10, /*J*/
-        11: 10, /*Q*/
-        12: 10 /*K*/
+        10: 10, //J
+        11: 10, //Q
+        12: 10 //K
     }
 
     let suma = 0;
@@ -194,7 +212,6 @@ function sumarCartas(mazo, flag) {
             
     }
     
-
     if(suma >= 21){
         console.log("gil")
     }
@@ -202,6 +219,7 @@ function sumarCartas(mazo, flag) {
     return suma
 }
 
+// Desactivar o activar botones
 function desactivarActivarBtn(numBtn){
     let flag = false
     let idBoton
@@ -232,6 +250,8 @@ function desactivarActivarBtn(numBtn){
     document.getElementById(idBoton).style.opacity = opacidad;
 }
 
+
+// Comparar los puntajes y retornar ganador
 function identificarGanador(mazoJ, mazoD){
     if (sumarCartas(mazoJ,true) <= 21 && sumarCartas(mazoD, true) < 21){
         if (sumarCartas(mazoJ,true) == sumarCartas(mazoD,true)){
@@ -255,6 +275,7 @@ function identificarGanador(mazoJ, mazoD){
     }
 }
 
+// Mostrar valor del mazo en pantalla (Flag = True --> Dealer)
 function h3MostrarValor(valor, flag){
 
     if (flag){
