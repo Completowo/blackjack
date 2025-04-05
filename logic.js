@@ -71,10 +71,14 @@ function FinalizarPartida(){
     desactivarActivarBtn(0);
     desactivarActivarBtn(1);
 
-    AgregarCartaDealer();
+    AgregarCartaDealer(false);
     voltearCartas(mazoDealer);
 
     h3MostrarValor(sumarCartas(mazoDealer, true),false);
+    creaBtnFin()
+    document.getElementById("BtnvolverJugar").style.display = "block";
+    document.getElementById("mensajeFinal").style.display = "block";
+    document.getElementById("subMensajeFinal").style.display = "block";
     
     let resultados = identificarGanador(mazo, mazoDealer)
     switch (resultados[0]){
@@ -123,13 +127,27 @@ function AgregarCarta(){
 }
 
 
-// Agregar cartas al Dealer hasta que el valor total de su mazo sea mayor a 16
-function AgregarCartaDealer(){
-    while (sumarCartas(mazoDealer, true) < 17){
-        darCartas(1, mazoDealer,cartas)
-        crearCartaDealer(mazoDealer[mazoDealer.length-1])
+
+// Agregar cartas al Dealer hasta que el valor total de su mazo sea mayor a 17
+//Si la flag es true solo agregara una carta, si es false agregara hasta que supere 17
+function AgregarCartaDealer(flag){
+
+    switch (flag){
+
+        case true:
+            darCartas(1, mazoDealer,cartas)
+            crearCartaDealer(mazoDealer[mazoDealer.length-1])
+            break
+        case false:
+            while (sumarCartas(mazoDealer, true) <= 17){
+                darCartas(1, mazoDealer,cartas)
+                crearCartaDealer(mazoDealer[mazoDealer.length-1])
+                break
+            }
     }
+
 }
+
 
 // Dar X cantidad de cartas a un mazo
 function darCartas(nCartas, mazo, cartas){
@@ -151,6 +169,7 @@ function mostrarMazo(mazo) {
     }
     console.log("------------------")
 }
+
 
 // Quita TODAS las cartas de un mazo
 function limpiarMazo(mazo) {
@@ -207,6 +226,65 @@ function crearCartaDealer(carta, flag){
     
     // Mostrar valor actualizado del mazo del Dealer
     h3MostrarValor(sumarCartas(mazoDealer, false),false)
+}
+
+
+
+function creaBtnFin(){
+    const btnReiniciar = document.createElement("button")
+    btnReiniciar.id = "BtnvolverJugar"
+    btnReiniciar.className = "btn"
+    btnReiniciar.textContent = "VOLVER A JUGAR"
+    btnReiniciar.addEventListener("click",function(){
+        reiniciarJuego()
+    })
+    document.getElementById("divReinicio").insertAdjacentElement("afterbegin", btnReiniciar)
+}
+
+function borrarCartas(){
+    //Acede al css
+    const cartasJugador = document.querySelectorAll('#misCartas .carta')
+    const cartasDealer = document.querySelectorAll('#cartasDealer .cartaDealer')
+    
+    // Eliminar las cartas del jugador y dealer
+    for (let i = 0; i < cartasJugador.length; i++) {
+        cartasJugador[i].remove();
+    };
+        
+    for (let i = 0; i < cartasDealer.length; i++) {
+        cartasDealer[i].remove();
+    }
+}
+
+function reiniciarJuego(){
+    // Limpiar los mazos
+
+    limpiarMazo(mazo);
+    limpiarMazo(mazoDealer);
+
+    borrarCartas()
+
+    //Agrega 2 Cartas al jugador
+    AgregarCarta()
+    AgregarCarta()
+
+    //Agrega 2 Cartas al dealer
+    darCartas(1, mazoDealer,cartas)
+    crearCartaDealer(mazoDealer[mazoDealer.length-1], true)
+    AgregarCartaDealer(true)
+
+
+    document.getElementById("BtnvolverJugar").style.display = "none";
+    document.getElementById("mensajeFinal").style.display = "none";
+    document.getElementById("subMensajeFinal").style.display = "none";
+
+    desactivarActivarBtn(0)
+    desactivarActivarBtn(1)
+    
+
+    mostrarMazo(mazoDealer)
+
+
 }
 
 
@@ -267,7 +345,7 @@ function desactivarActivarBtn(numBtn){
     // En caso de que el botón ya esté activado:
     if (document.getElementById(idBoton).disabled == false){
         flag = true;
-        color = "linear-gradient(135deg, #00449c, #002e69)";
+        color = "linear-gradient(135deg, #006eff, #004db3);";
         opacidad = "50%"
     }
 

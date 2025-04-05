@@ -150,3 +150,9 @@ body{
     bottom: 230px;
     right: 30%;
 }
+
+#BtnvolverJugar {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 40%;
+}
