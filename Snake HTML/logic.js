@@ -1,9 +1,17 @@
 
-//Se crea un mapa de dimensiones 10x10
+//Se crea el mapa
 let mapa = crearMapa(25,25);
 
 dibujarMapa(mapa)
-colorearCelda(5,9,"#000")
+
+
+
+
+
+
+colorearCelda(5,9,"rgb(78, 70, 255)")
+
+
 
 
 
@@ -15,14 +23,16 @@ colorearCelda(5,9,"#000")
 
 // Funciones
 
-
-// Colorear celda 
-// pY = valor fila
-// pX = Valor columna
-// pColor = Codigo de color
+/* 
+Función para colorear celda 
+- pY = valor fila
+- pX = Valor columna
+- pColor = Codigo de color
+*/
 function colorearCelda(pX,pY, pColor){
     document.getElementById("fila-"+pY+"-columna-"+pX).style.backgroundColor = pColor
 }
+    
 
 function dibujarMapa(pMapa){
     const tablaContenedor = document.createElement("table")
