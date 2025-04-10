@@ -1,15 +1,15 @@
 
 //Se crea el mapa
 let mapa = crearMapa(25,25);
+//dibujarMapa(mapa)
 
-dibujarMapa(mapa)
+let canvas = document.getElementById("mainCanvas");
+let ctx = canvas.getContext('2d')
+canvas.height = 480
+canvas.width = 720
 
-
-
-
-
-
-colorearCelda(5,9,"rgb(78, 70, 255)")
+ctx.fillStyle = "#FF0000"
+ctx.fillRect(0,0,canvas.width,canvas.height)
 
 
 
@@ -33,7 +33,7 @@ function colorearCelda(pX,pY, pColor){
     document.getElementById("fila-"+pY+"-columna-"+pX).style.backgroundColor = pColor
 }
     
-
+/*
 function dibujarMapa(pMapa){
     const tablaContenedor = document.createElement("table")
     tablaContenedor.id = "tablaContenedor"
@@ -55,6 +55,7 @@ function dibujarMapa(pMapa){
     document.getElementById("c-mapa").appendChild(tablaContenedor)
     return true
 }
+*/
 
 
 // toString del mapa
