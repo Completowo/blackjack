@@ -5,9 +5,10 @@ const ctx = canvas.getContext("2d")
 const BLOCK_SIZE = 20
 const BOARD_WIDTH = 14
 const BOARD_HEIGHT = 30
-let posSnake = [10,3]
+let posSnake = [[3,3]]
 
-canvas.witdh = BLOCK_SIZE * BOARD_WIDTH
+
+canvas.width = BLOCK_SIZE * BOARD_WIDTH
 canvas.height = BLOCK_SIZE * BOARD_HEIGHT
 
 
@@ -50,9 +51,9 @@ function update() {
 
 function draw(){
     ctx.fillStyle = "000"
-    ctx.fillRect(0,0, canvas.witdh, canvas.height)
+    ctx.fillRect(0,0, canvas.width, canvas.height)
 
-    //Por cada Fila
+   /* //Por cada Fila
     for (let y = 0; mapaArray.length > y; y++){
         
         //Por cada columna
@@ -68,42 +69,88 @@ function draw(){
 
             }
         }
-    }
-}
+    }*/
 
-function snake(){
-    mapaArray[posSnake[0], posSnake[1]] = 1
-
-    document.addEventListener("keydown", function(keyboard){
-        if(keyboard.key == "ArrowUp"){
-            posSnake = moveSnake(posSnake, 0)
-            mapaArray[posSnake[0], posSnake[1]] = 1
-            console.log(mapaArray)
-        }
+    mapaArray.forEach((row, y) => {
+        row.forEach((value, x) =>{
+            if (value == 0){
+                ctx.fillStyle = "green"
+                ctx.fillRect(x, y, 1, 1)
+            }else if (value == 1){
+                ctx.fillStyle = "red"
+                ctx.fillRect(x, y, 1, 1)
+            }
+        })
     })
 }
 
-function moveSnake(posAct, direc){
-    switch (direc){
-        //Arriba
-        case 0: 
-            posAct[0] = posAct[0] -1 
-        //Derecha
-        case 1:
-            posAct[1] = posAct[1] +1
-        //abajo
-        case 2:
-            posAct[0] = posAct[0] +1
-        //Izquierda
-        case 3:
-            posAct[1] = posAct[1] -1
-    }
-    return posAct
+function snake(){
+    document.addEventListener("keydown", function(keyboard){
+        const [headY, headX] = posSnake[0]
+        let newHead
+        //Mover hacia arriba
+        if(keyboard.key == "ArrowUp"){
+            newHead = [headY - 1, headX];
+            console.log(mapaArray)
+
+
+        //Mover hacia abajo
+        }else if (keyboard.key == "ArrowDown"){
+            newHead = [headY + 1, headX]
+
+
+        //Mover izquierda
+        }else if (keyboard.key == "ArrowLeft"){
+            newHead = [headY, headX - 1]
+            
+        
+
+        //Mover Derecha
+        }else if (keyboard.key == "ArrowRight"){
+            newHead = [headY, headX + 1]
+        }
+
+
+        posSnake.unshift(newHead);
+        posSnake.pop()
+
+        clearMap()
+
+
+        posSnake.forEach(([y, x]) => {
+            mapaArray[y][x] = 1;
+        });
+    })
+
+
+
 }
 
 
-snake()
+/*function moveSnake(posAct, direc){
+    switch (direc){
+        //Arriba
+        case 0: 
+            posAct[0] = posAct[0] -1
+            break
+        //Derecha
+        case 1:
+            posAct[1] = posAct[1] +1
+            break
+        //abajo
+        case 2:
+            posAct[0] = posAct[0] +1
+            break
+        //Izquierda
+        case 3:
+            posAct[1] = posAct[1] -1
+            break
+    }
+    return posAct
+} */
 
+
+snake()
 console.log(mapaArray)
 
 
