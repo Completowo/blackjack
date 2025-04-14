@@ -1,22 +1,24 @@
 
 const canvas = document.getElementById("can");
 const ctx = canvas.getContext("2d")
-
 const BLOCK_SIZE = 20
 const BOARD_WIDTH = 14
 const BOARD_HEIGHT = 30
 let posSnake = [[3,3]]
-
-
 canvas.width = BLOCK_SIZE * BOARD_WIDTH
 canvas.height = BLOCK_SIZE * BOARD_HEIGHT
-
-
 ctx.scale(BLOCK_SIZE, BLOCK_SIZE)
-
-
-
 let mapaArray = crearMapa(BOARD_WIDTH, BOARD_HEIGHT)
+
+
+
+
+
+
+update();
+snake()
+
+
 
 
 
@@ -47,6 +49,8 @@ function clearMap(){
 
 
 function update() {
+
+    //setTimeout(update,200)
     draw()
     window.requestAnimationFrame(update)
 }
@@ -78,28 +82,21 @@ function snake(){
 
         //Mover hacia arriba
         if(keyboard.key == "ArrowUp"){
-            existFood(posSnake[0], 0)
             newHead = [headY - 1, headX];
-
-
-
 
         //Mover hacia abajo
         }else if (keyboard.key == "ArrowDown"){
-            existFood(posSnake, 2)
             newHead = [headY + 1, headX]
 
 
         //Mover izquierda
         }else if (keyboard.key == "ArrowLeft"){
-            existFood(posSnake, 3)
             newHead = [headY, headX - 1]
             
         
 
         //Mover Derecha
         }else if (keyboard.key == "ArrowRight"){
-            existFood(posSnake, 1)
             newHead = [headY, headX + 1]
         }
 
@@ -109,63 +106,39 @@ function snake(){
 
         clearMap()
 
-
         posSnake.forEach(([y, x]) => {
             mapaArray[y][x] = 1;
         });
 
     })
 
-
-
 }
 
 function food(){
-    mapaArray[Math.floor(Math.random() * BOARD_HEIGHT )][Math.floor(Math.random() * BOARD_WIDTH)] = 2;
+    //mapaArray[Math.floor(Math.random() * BOARD_HEIGHT )][Math.floor(Math.random() * BOARD_WIDTH)] = 2;
+     if (!(existFood(mapaArray))) {
+
+        let p_x = Math.floor(Math.random() * BOARD_HEIGHT)
+        let p_y = Math.floor(Math.random() * BOARD_WIDTH)
+        mapaArray[p_x][p_y] = 2;
+        console.log("Hola")
+     }
+
 }
 
-function existFood(p_posSnake ,direction){
-
-
-    let flag = false
-    
-    switch (direction){
-        case 0: 
-            if (mapaArray[p_posSnake[0]-1, p_posSnake[1]] == 2) {
-                flag = true
-                break
+function existFood(p_mapa){
+    let count = 0;
+    for (let n = 0; p_mapa[0].length > n; n++){
+        for (let m = 0; p_mapa[1].length > m; m++){
+            if (mapaArray[n][m] == 2){
+                count++
             }
-        case 1: 
-            if (mapaArray[p_posSnake[0], p_posSnake[1]]+1 == 2) {
-                flag = true
-                break
-            }
-        case 2:
-            if (mapaArray[p_posSnake[0]+1, p_posSnake[1]-1] == 2) {
-                flag = true
-                break
-            }
-        case 3:
-            if (mapaArray[p_posSnake[0], p_posSnake[1]-1]-1 == 2) {
-                flag = true
-                break
-            }
+        }
     }
-
-    console.log(flag)
-
-    return flag
-
+    if (count > 0){
+        return true
+    } 
+    return false
 }
 
 
-
-
-
-food()
-snake()
-console.log(mapaArray)
-
-
-
-update();
