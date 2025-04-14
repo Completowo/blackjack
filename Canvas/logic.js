@@ -36,7 +36,9 @@ function crearMapa(B_W, B_H) {
 function clearMap(){
     for (let y = 0; mapaArray.length > y; y++){
         for (let x = 0; mapaArray[y].length > x; x++){
-            mapaArray[y][x] = 0
+            if ((mapaArray[y][x] != 2)){
+                mapaArray[y][x] = 0
+            }
         }
     }
     return mapaArray
@@ -53,32 +55,17 @@ function draw(){
     ctx.fillStyle = "000"
     ctx.fillRect(0,0, canvas.width, canvas.height)
 
-   /* //Por cada Fila
-    for (let y = 0; mapaArray.length > y; y++){
-        
-        //Por cada columna
-        for (let x; mapaArray[y].length > x; x++){
-
-            if (value == 0){
-                ctx.fillStyle = "green"
-                ctx.fillRect(x, y, 1, 1)
-
-            } else if (value == 1){
-                ctx.fillStyle = "red"
-                ctx.fillRect(x, y, 1, 1)
-
-            }
-        }
-    }*/
-
     mapaArray.forEach((row, y) => {
         row.forEach((value, x) =>{
             if (value == 0){
                 ctx.fillStyle = "green"
                 ctx.fillRect(x, y, 1, 1)
             }else if (value == 1){
-                ctx.fillStyle = "red"
+                ctx.fillStyle = "purple"
                 ctx.fillRect(x, y, 1, 1)
+            }else if (value == 3){
+                ctx.fillStyle = "red"
+                ctx.fillRect(x, y,1,1)
             }
         })
     })
@@ -126,30 +113,20 @@ function snake(){
 
 }
 
-
-/*function moveSnake(posAct, direc){
-    switch (direc){
-        //Arriba
-        case 0: 
-            posAct[0] = posAct[0] -1
-            break
-        //Derecha
-        case 1:
-            posAct[1] = posAct[1] +1
-            break
-        //abajo
-        case 2:
-            posAct[0] = posAct[0] +1
-            break
-        //Izquierda
-        case 3:
-            posAct[1] = posAct[1] -1
-            break
-    }
-    return posAct
-} */
+function food(){
 
 
+    mapaArray[Math.floor(Math.random() * BOARD_HEIGHT )][Math.floor(Math.random() * BOARD_WIDTH)] = 3;
+
+
+}
+
+
+
+
+
+
+food()
 snake()
 console.log(mapaArray)
 
