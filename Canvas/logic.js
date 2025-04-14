@@ -63,7 +63,7 @@ function draw(){
             }else if (value == 1){
                 ctx.fillStyle = "purple"
                 ctx.fillRect(x, y, 1, 1)
-            }else if (value == 3){
+            }else if (value == 2){
                 ctx.fillStyle = "red"
                 ctx.fillRect(x, y,1,1)
             }
@@ -75,25 +75,31 @@ function snake(){
     document.addEventListener("keydown", function(keyboard){
         const [headY, headX] = posSnake[0]
         let newHead
+
         //Mover hacia arriba
         if(keyboard.key == "ArrowUp"){
+            existFood(posSnake[0], 0)
             newHead = [headY - 1, headX];
-            console.log(mapaArray)
+
+
 
 
         //Mover hacia abajo
         }else if (keyboard.key == "ArrowDown"){
+            existFood(posSnake, 2)
             newHead = [headY + 1, headX]
 
 
         //Mover izquierda
         }else if (keyboard.key == "ArrowLeft"){
+            existFood(posSnake, 3)
             newHead = [headY, headX - 1]
             
         
 
         //Mover Derecha
         }else if (keyboard.key == "ArrowRight"){
+            existFood(posSnake, 1)
             newHead = [headY, headX + 1]
         }
 
@@ -107,6 +113,7 @@ function snake(){
         posSnake.forEach(([y, x]) => {
             mapaArray[y][x] = 1;
         });
+
     })
 
 
@@ -114,13 +121,42 @@ function snake(){
 }
 
 function food(){
-
-
-    mapaArray[Math.floor(Math.random() * BOARD_HEIGHT )][Math.floor(Math.random() * BOARD_WIDTH)] = 3;
-
-
+    mapaArray[Math.floor(Math.random() * BOARD_HEIGHT )][Math.floor(Math.random() * BOARD_WIDTH)] = 2;
 }
 
+function existFood(p_posSnake ,direction){
+
+
+    let flag = false
+    
+    switch (direction){
+        case 0: 
+            if (mapaArray[p_posSnake[0]-1, p_posSnake[1]] == 2) {
+                flag = true
+                break
+            }
+        case 1: 
+            if (mapaArray[p_posSnake[0], p_posSnake[1]]+1 == 2) {
+                flag = true
+                break
+            }
+        case 2:
+            if (mapaArray[p_posSnake[0]+1, p_posSnake[1]-1] == 2) {
+                flag = true
+                break
+            }
+        case 3:
+            if (mapaArray[p_posSnake[0], p_posSnake[1]-1]-1 == 2) {
+                flag = true
+                break
+            }
+    }
+
+    console.log(flag)
+
+    return flag
+
+}
 
 
 
