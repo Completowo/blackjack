@@ -73,6 +73,8 @@ function draw(){
             }
         })
     })
+
+    food()
 }
 
 function snake(){
@@ -101,8 +103,17 @@ function snake(){
         }
 
 
-        posSnake.unshift(newHead);
-        posSnake.pop()
+
+        //Comer manzana
+        if (mapaArray[posSnake[0]] = mapaArray[newHead[0]][newHead[1]] == 2){
+            posSnake.unshift(newHead);
+            true
+        }else {
+            posSnake.unshift(newHead);
+            posSnake.pop()
+            false
+        }
+
 
         clearMap()
 
@@ -115,7 +126,6 @@ function snake(){
 }
 
 function food(){
-    //mapaArray[Math.floor(Math.random() * BOARD_HEIGHT )][Math.floor(Math.random() * BOARD_WIDTH)] = 2;
      if (!(existFood(mapaArray))) {
 
         let p_x = Math.floor(Math.random() * BOARD_HEIGHT)
@@ -127,18 +137,18 @@ function food(){
 }
 
 function existFood(p_mapa){
-    let count = 0;
-    for (let n = 0; p_mapa[0].length > n; n++){
-        for (let m = 0; p_mapa[1].length > m; m++){
-            if (mapaArray[n][m] == 2){
-                count++
+    for (let n = 0; p_mapa.length > n; n++){
+        for (let m = 0; p_mapa[n].length > m; m++){
+            if (p_mapa[n][m] == 2){
+                return true
             }
         }
     }
-    if (count > 0){
-        return true
-    } 
-    return false
+
+}
+
+function existCollision(){
+    
 }
 
 
