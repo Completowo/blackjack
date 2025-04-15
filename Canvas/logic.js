@@ -84,37 +84,50 @@ function snake(){
 
         //Mover hacia arriba
         if(keyboard.key == "ArrowUp"){
-            newHead = [headY - 1, headX];
+            if (canMove(headY-1, headX, BOARD_HEIGHT-1, BOARD_WIDTH)){
+                newHead = [headY-1, headX]
+            } else {
+                newHead = [headY, headX]
+            }
 
         //Mover hacia abajo
         }else if (keyboard.key == "ArrowDown"){
-            newHead = [headY + 1, headX]
-
+            if (canMove(headY+1, headX, BOARD_HEIGHT-1, BOARD_WIDTH)){
+                newHead = [headY+1, headX]
+            } else {
+                newHead = [headY, headX]
+            }
 
         //Mover izquierda
         }else if (keyboard.key == "ArrowLeft"){
-            newHead = [headY, headX - 1]
-            
-        
+            if (canMove(headY, headX-1, BOARD_HEIGHT, BOARD_WIDTH-1)){
+                newHead = [headY, headX - 1]
+            } else {
+                newHead = [headY, headX]
+            }
 
         //Mover Derecha
         }else if (keyboard.key == "ArrowRight"){
-            newHead = [headY, headX + 1]
+            if (canMove(headY, headX+1, BOARD_HEIGHT, BOARD_WIDTH-1)){
+                newHead = [headY, headX +1]
+            } else {
+                newHead = [headY, headX]
+            }
+
         }
 
+        console.log(newHead)
 
 
         //Comer manzana
-        if (mapaArray[posSnake[0]] = mapaArray[newHead[0]][newHead[1]] == 2){
+        if (mapaArray[newHead[0]][newHead[1]] == 2){
             posSnake.unshift(newHead);
-            true
+            
         }else {
             posSnake.unshift(newHead);
             posSnake.pop()
-            false
         }
-
-
+        
         clearMap()
 
         posSnake.forEach(([y, x]) => {
@@ -125,13 +138,33 @@ function snake(){
 
 }
 
+function canMove(p_posy, p_posx, p_height, p_width){
+    if (p_posy <= p_height && p_posy >= 0){
+        if (p_posx <= p_width && p_posx >= 0){
+            return true
+        }
+    }
+    return false
+}
+
 function food(){
      if (!(existFood(mapaArray))) {
 
+        let flag = true
+
         let p_x = Math.floor(Math.random() * BOARD_HEIGHT)
         let p_y = Math.floor(Math.random() * BOARD_WIDTH)
-        mapaArray[p_x][p_y] = 2;
-        console.log("Hola")
+
+        while (flag){
+            if (mapaArray[p_x][p_y] == 1) {
+                p_x = Math.floor(Math.random() * BOARD_HEIGHT)
+                p_y = Math.floor(Math.random() * BOARD_WIDTH)
+            } else {
+                flag = false
+                mapaArray[p_x][p_y] = 2
+            };
+        }
+        
      }
 
 }
@@ -145,10 +178,6 @@ function existFood(p_mapa){
         }
     }
 
-}
-
-function existCollision(){
-    
 }
 
 
