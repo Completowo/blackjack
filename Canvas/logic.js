@@ -83,15 +83,15 @@ function snake(){
         let newHead
 
         //Mover hacia arriba
-        if(keyboard.key == "ArrowUp"){
-            if (canMove(headY-1, headX, BOARD_HEIGHT-1, BOARD_WIDTH)){
+        if(keyboard.key == "ArrowUp" || keyboard.key == "w"){
+            if (canMove(posSnake ,headY-1, headX, BOARD_HEIGHT-1, BOARD_WIDTH)){
                 newHead = [headY-1, headX]
             } else {
                 newHead = [headY, headX]
             }
 
         //Mover hacia abajo
-        }else if (keyboard.key == "ArrowDown"){
+        }else if (keyboard.key == "ArrowDown" ||keyboard.key == "s"){
             if (canMove(headY+1, headX, BOARD_HEIGHT-1, BOARD_WIDTH)){
                 newHead = [headY+1, headX]
             } else {
@@ -99,7 +99,7 @@ function snake(){
             }
 
         //Mover izquierda
-        }else if (keyboard.key == "ArrowLeft"){
+        }else if (keyboard.key == "ArrowLeft" || keyboard.key == "a"){
             if (canMove(headY, headX-1, BOARD_HEIGHT, BOARD_WIDTH-1)){
                 newHead = [headY, headX - 1]
             } else {
@@ -107,7 +107,7 @@ function snake(){
             }
 
         //Mover Derecha
-        }else if (keyboard.key == "ArrowRight"){
+        }else if (keyboard.key == "ArrowRight" || keyboard.key == "d"){
             if (canMove(headY, headX+1, BOARD_HEIGHT, BOARD_WIDTH-1)){
                 newHead = [headY, headX +1]
             } else {
@@ -117,7 +117,9 @@ function snake(){
         }
 
         console.log(newHead)
-
+        console.log(posSnake)
+        console.log(headY)
+        console.log(headX)
 
         //Comer manzana
         if (mapaArray[newHead[0]][newHead[1]] == 2){
@@ -138,13 +140,16 @@ function snake(){
 
 }
 
-function canMove(p_posy, p_posx, p_height, p_width){
-    if (p_posy <= p_height && p_posy >= 0){
-        if (p_posx <= p_width && p_posx >= 0){
-            return true
+function canMove(p_snake,p_posy, p_posx, p_height, p_width){
+    if (p_posy <= p_height && p_posy <= p_height){
+        if (p_posx <= 0 && p_posx <= p_width){
+            if (p_snake.includes([p_posy,p_posx])){
+                return false
         }
     }
-    return false
+
+    return true
+    }
 }
 
 function food(){
